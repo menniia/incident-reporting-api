@@ -5,7 +5,7 @@ const incidentRoute = Router();
 
 incidentRoute.post("/incidents/report-incident", reportIncident)
 
-incidentRoute.get("/incidents", listIncidents);
+incidentRoute.get("/incidents/all-incidents", listIncidents);
 
 incidentRoute.post("/incidents/search-incident", searchIncidents)
 

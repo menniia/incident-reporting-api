@@ -1,9 +1,5 @@
-import { DataTypes, Sequelize } from "sequelize";
-
-
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres"
-});
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
 
 const Incident = sequelize.define(
     "Incident",
@@ -29,9 +25,10 @@ const Incident = sequelize.define(
         }
     },
     {
-        tableName: "Incidents",
         timestamps: true
     }
 )
+
+sequelize.sync({ force: true })
 
 export default Incident

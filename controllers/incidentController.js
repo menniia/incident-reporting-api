@@ -11,15 +11,19 @@ const reportIncident = async (req, res) => {
         // fetch weather api
         const weatherReport = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}`)
 
+        if (!weatherReport) {
+            return res.status(500).json({ message: "Failed to retrieve weather data" })
+        }
+
         // create a new incident, adding weather data to incident table
         const newIncident = await Incident.create({
             client_id,
             incident_desc,
             city,
             country,
-            weather_report: (await weatherReport).data
+            weather_report: weatherReport.data
         })
-        res.status(200).json({ message: "Incident successfully created", newIncident })
+        res.status(201).json({ message: "Incident successfully created", newIncident })
     } catch (error) {
         res.status(500).json({ message: "Failed to create incident", error: error.message })
     }
@@ -34,6 +38,7 @@ const listIncidents = async (req, res) => {
             find.city = city
         }
 
+        // filter by temperature range
         if (temp_min || temp_max) {
             find.weather_report = {
                 ...(find.weather_report || {}),
@@ -42,6 +47,7 @@ const listIncidents = async (req, res) => {
             }
         }
 
+        // filter by humidity range
         if (minHumidity || maxHumidity) {
             find.weather_report = {
                 ...(find.weather_report || {}),
