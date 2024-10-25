@@ -31,4 +31,4 @@ const Incident = sequelize.define(
 
 sequelize.sync({ force: true })
 
-export default Incident
+export default Incident;
