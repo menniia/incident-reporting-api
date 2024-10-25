@@ -1,4 +1,4 @@
-import * as chai from "chai"
+import * as chai from 'chai'
 import chaiHttp from "chai-http";
 import sequelize from "../config/db.js";
 import app from "../index.js";
@@ -23,8 +23,8 @@ describe("Incident API", () => {
                 .send({
                     client_id: 1,
                     incident_desc: "Example of an incident",
-                    city: "London",
-                    country: "GB"
+                    city: "Accra",
+                    country: "GH"
                 });
             chai.expect(res).to.have.status(201)
             chai.expect(res.body).to.have.property("message", "Incident successfully created")
@@ -39,8 +39,8 @@ describe("Incident API", () => {
                 .send({
                     client_id: 1,
                     incident_desc: "Example of an incident",
-                    city: "London",
-                    country: "GB"
+                    city: "Accra",
+                    country: "GH"
                 });
 
             const res = await chai.request(app).get("/api/v1/incidents/all-incidents");
@@ -50,11 +50,11 @@ describe("Incident API", () => {
 
         it("should filter incidents by city", async () => {
             const res = await chai.request(app)
-                .get("/api/v1/incidents/all-incidents?city=London");
+                .get("/api/v1/incidents/all-incidents?city=Accra");
 
             chai.expect(res).to.have.status(200);
             chai.expect(res.body).to.be.an("array").that.is.not.empty;
-            chai.expect(res.body[0]).to.have.property("city", "London");
+            chai.expect(res.body[0]).to.have.property("city", "Accra");
         });
     });
 

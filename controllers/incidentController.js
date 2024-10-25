@@ -1,4 +1,5 @@
 import axios from "axios";
+import "dotenv/config";
 import Incident from "../models/incidentModel.js";
 import { Op } from "sequelize";
 
